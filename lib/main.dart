@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_flutter_app/screens/category_screen.dart';
+import 'package:meal_flutter_app/screens/favourite_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,10 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.pink,
         accentColor: Colors.amber,
-        canvasColor: Color.fromRGBO(255,254, 229, 1),
+        canvasColor: Color.fromRGBO(255, 254, 229, 1),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),
@@ -25,26 +25,44 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  int c_index = 0;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
 
-      body: CategoryScreen(),
+    Widget page=CategoryScreen();
+    if(c_index==0)
+      {
+        page=CategoryScreen();
+      }
+    else if(c_index==1)
+      {
+        page=FavouriteScreen();
+      }
+
+    return Scaffold(
+      body: page,
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        selectedItemColor: Colors.white,
+        onTap: (index) {
+          setState(() {
+            c_index = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.category_rounded), label: "Categories"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: "Favourite")
+        ],
+        currentIndex: c_index,
+      ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

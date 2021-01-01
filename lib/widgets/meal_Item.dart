@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_flutter_app/modules/meal.dart';
+import 'package:meal_flutter_app/screens/meal_details.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
@@ -27,7 +28,13 @@ class MealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_){
+              return MealDetails(meal);
+
+        }));
+      },
       child: Card(
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         elevation: 7,
