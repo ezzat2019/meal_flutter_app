@@ -88,15 +88,22 @@ class MealDetails extends StatelessWidget {
                             ),
                           Divider()
                         ],
-                      );
-
-                    },itemCount: meal.steps.length,),
+                        );
+                      },
+                      itemCount: meal.steps.length,
+                    ),
                   )
                 ],
               ),
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pop(meal.id);
+        },
+        child: Icon(Icons.delete),
       ),
     );
   }

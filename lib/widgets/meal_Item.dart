@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_flutter_app/modules/meal.dart';
-import 'package:meal_flutter_app/screens/meal_details.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
   String complex, aff;
+  final Function remove;
 
-  MealItem(this.meal) {
+  MealItem(this.meal, this.remove) {
     if (meal.complexity == Complexity.Simple) {
       complex = "Simple";
     } else if (meal.complexity == Complexity.Hard) {
@@ -28,13 +28,7 @@ class MealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_){
-              return MealDetails(meal);
-
-        }));
-      },
+      onTap: () => remove(context, meal),
       child: Card(
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         elevation: 7,
@@ -94,7 +88,6 @@ class MealItem extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     Row(
                       children: [
                         Icon(Icons.work_sharp),
@@ -109,7 +102,6 @@ class MealItem extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     Row(
                       children: [
                         Icon(Icons.attach_money),
@@ -131,3 +123,5 @@ class MealItem extends StatelessWidget {
     );
   }
 }
+
+

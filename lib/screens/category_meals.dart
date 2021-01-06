@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal_flutter_app/dummy_data.dart';
 import 'package:meal_flutter_app/modules/meal.dart';
+import 'package:meal_flutter_app/screens/meal_details.dart';
 import 'package:meal_flutter_app/widgets/meal_Item.dart';
 
 class CategotyMeals extends StatefulWidget {
@@ -9,18 +10,38 @@ class CategotyMeals extends StatefulWidget {
   CategotyMeals({this.id, this.title});
 
   @override
-  _CategotyMealsState createState() => _CategotyMealsState(id, title);
+  CategotyMealsState createState() => CategotyMealsState(id, title);
 }
 
-class _CategotyMealsState extends State<CategotyMeals> {
+class CategotyMealsState extends State<CategotyMeals> {
   String id, title;
   List<Meal> mealsOfOneCategoty;
 
-  _CategotyMealsState(this.id, this.title) {
+  CategotyMealsState(this.id, this.title) {}
+
+  @override
+  void initState() {
     mealsOfOneCategoty = DUMMY_MEALS.where((meal) {
-      print("yy");
       return meal.categories.contains(id);
     }).toList();
+  }
+
+  Function removeItem(value) {
+    setState(() {
+      mealsOfOneCategoty.removeWhere((element) => element.id == value);
+    });
+  }
+
+  Function gotoDetails(BuildContext c, Meal meal) {
+    setState(() {
+      Navigator.of(c).push(MaterialPageRoute(builder: (_) {
+        return MealDetails(meal);
+      })).then((value) {
+        if (value != null) {
+          removeItem(value);
+        }
+      });
+    });
   }
 
   @override
@@ -31,8 +52,8 @@ class _CategotyMealsState extends State<CategotyMeals> {
         ),
         body: ListView.builder(
           itemBuilder: (context, pos) {
-            return MealItem(mealsOfOneCategoty[pos]);
-
+            print("yes");
+            return MealItem(mealsOfOneCategoty[pos], gotoDetails);
           },
           itemCount: mealsOfOneCategoty.length,
         ));

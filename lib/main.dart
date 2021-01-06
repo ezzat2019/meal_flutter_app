@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal_flutter_app/screens/category_screen.dart';
 import 'package:meal_flutter_app/screens/favourite_screen.dart';
+import 'package:meal_flutter_app/widgets/main_drawer.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         currentIndex: c_index,
       ),
+
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
