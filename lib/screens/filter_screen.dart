@@ -1,23 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meal_flutter_app/widgets/main_drawer.dart';
 
 class FilterScreen extends StatefulWidget {
+  final Function setFilter;
+
+  FilterScreen(this.setFilter);
+
   @override
-  _FilterScreenState createState() => _FilterScreenState();
+  _FilterScreenState createState() => _FilterScreenState(setFilter);
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+  final Function setFilter;
   bool isGlutenFree = false,
       isVegan = false,
       isVegetarian = false,
       isLactoseFree = false;
+  Map<String, bool> filterMap = Map();
+
+  _FilterScreenState(this.setFilter);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Filters"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () {
+                filterMap['isGlutenFree'] = isGlutenFree;
+                filterMap['isVegan'] = isVegan;
+                filterMap['isVegetarian'] = isVegetarian;
+                filterMap['isLactoseFree'] = isLactoseFree;
+                setState(() {
+                  setFilter(filterMap);
+                });
+              })
+        ],
       ),
       body: Column(
         children: [
@@ -83,7 +103,7 @@ class _FilterScreenState extends State<FilterScreen> {
           )
         ],
       ),
-      drawer: MainDrawer(),
+      // drawer: MainDrawer(setFilter),
     );
   }
 }

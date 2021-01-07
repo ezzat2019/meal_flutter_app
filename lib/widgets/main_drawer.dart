@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_flutter_app/modules/meal.dart';
 import 'package:meal_flutter_app/screens/category_screen.dart';
 import 'package:meal_flutter_app/screens/filter_screen.dart';
 
 class MainDrawer extends StatelessWidget {
+  final Function setFilter;
+  Function pp;
+  List<Meal> favList;
+
+  MainDrawer(this.setFilter, this.pp, this.favList);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -30,7 +37,7 @@ class MainDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .pushReplacement(MaterialPageRoute(builder: (_) {
-                return CategoryScreen();
+                return CategoryScreen(pp, favList);
               }));
             },
             leading: Icon(Icons.restaurant),
@@ -45,9 +52,10 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context)
-                  .pushReplacement(MaterialPageRoute(builder: (_) {
-                return FilterScreen();
+                  .push(MaterialPageRoute(builder: (_) {
+                return FilterScreen(setFilter);
               }));
             },
             leading: Icon(Icons.settings),

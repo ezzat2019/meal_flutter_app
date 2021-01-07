@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meal_flutter_app/modules/meal.dart';
 import 'package:meal_flutter_app/screens/category_screen.dart';
 import 'package:meal_flutter_app/screens/favourite_screen.dart';
-import 'package:meal_flutter_app/widgets/main_drawer.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,19 +32,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int c_index = 0;
+  List<Meal> favList = [];
+
+  void pp(Meal meal) {
+    setState(() {
+      if (!favList.contains(meal)) {
+        favList.add(meal);
+        print(meal.title + "   " + favList.length.toString());
+      } else {
+        favList.remove(meal);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    Widget page=CategoryScreen();
-    if(c_index==0)
-      {
-        page=CategoryScreen();
-      }
-    else if(c_index==1)
-      {
-        page=FavouriteScreen();
-      }
+    Widget page = CategoryScreen(pp, favList);
+    if (c_index == 0) {
+      page = CategoryScreen(pp, favList);
+    } else if (c_index == 1) {
+      page = FavouriteScreen(pp, favList);
+    }
 
     return Scaffold(
       body: page,

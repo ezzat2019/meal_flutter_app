@@ -1,30 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:meal_flutter_app/dummy_data.dart';
 import 'package:meal_flutter_app/modules/meal.dart';
 import 'package:meal_flutter_app/screens/meal_details.dart';
 import 'package:meal_flutter_app/widgets/meal_Item.dart';
 
 class CategotyMeals extends StatefulWidget {
   String id, title;
+  final List<Meal> meals;
+  Function pp;
+  List<Meal> favList;
 
-  CategotyMeals({this.id, this.title});
+  CategotyMeals(this.id, this.title, this.meals, this.pp, this.favList);
 
   @override
   CategotyMealsState createState() => CategotyMealsState(id, title);
 }
 
 class CategotyMealsState extends State<CategotyMeals> {
+
   String id, title;
   List<Meal> mealsOfOneCategoty;
 
-  CategotyMealsState(this.id, this.title) {}
+
+  CategotyMealsState(this.id, this.title) {
+
+  }
 
   @override
   void initState() {
-    mealsOfOneCategoty = DUMMY_MEALS.where((meal) {
+    mealsOfOneCategoty = widget.meals.where((meal) {
       return meal.categories.contains(id);
     }).toList();
   }
+
 
   Function removeItem(value) {
     setState(() {
@@ -35,7 +42,7 @@ class CategotyMealsState extends State<CategotyMeals> {
   Function gotoDetails(BuildContext c, Meal meal) {
     setState(() {
       Navigator.of(c).push(MaterialPageRoute(builder: (_) {
-        return MealDetails(meal);
+        return MealDetails(meal, widget.pp, widget.favList);
       })).then((value) {
         if (value != null) {
           removeItem(value);
