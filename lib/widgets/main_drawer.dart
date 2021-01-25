@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_flutter_app/modules/meal.dart';
 import 'package:meal_flutter_app/screens/category_screen.dart';
+import 'package:meal_flutter_app/screens/favourite_theme.dart';
 import 'package:meal_flutter_app/screens/filter_screen.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -40,11 +41,12 @@ class MainDrawer extends StatelessWidget {
                 return CategoryScreen(pp, favList);
               }));
             },
-            leading: Icon(Icons.restaurant),
+            leading:
+                Icon(Icons.restaurant, color: Theme.of(context).buttonColor),
             title: Text(
               "Meal",
               style: TextStyle(
-                  color: Colors.black,
+                  color: Theme.of(context).buttonColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                   fontFamily: 'RobotoCondensed'),
@@ -53,19 +55,37 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                 return FilterScreen(setFilter);
               }));
             },
-            leading: Icon(Icons.settings),
+            leading: Icon(Icons.settings, color: Theme.of(context).buttonColor),
             title: Text(
               "Filters",
               style: TextStyle(
-                  color: Colors.black,
+                  color: Theme.of(context).buttonColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                   fontFamily: 'RobotoCondensed'),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return FavouriteTheme();
+              }));
+            },
+            leading: Icon(Icons.twenty_three_mp,
+                color: Theme.of(context).buttonColor),
+            title: Text(
+              "Theme",
+              style: TextStyle(
+                color: Theme.of(context).buttonColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                fontFamily: 'RobotoCondensed',
+              ),
             ),
           )
         ],

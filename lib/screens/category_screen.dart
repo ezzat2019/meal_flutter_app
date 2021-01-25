@@ -21,6 +21,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     'isVegetarian': false,
     'isLactoseFree': false,
   };
+
   List<Meal> meals = DUMMY_MEALS;
 
   void setFilter(Map<String, bool> filterMap) {

@@ -1,23 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:meal_flutter_app/modules/meal.dart';
+import 'package:meal_flutter_app/providers/theme_provider.dart';
 import 'package:meal_flutter_app/screens/category_screen.dart';
 import 'package:meal_flutter_app/screens/favourite_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => ThemeProvider())],
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<ThemeProvider>(context, listen: false).getModePref();
+    Provider.of<ThemeProvider>(context, listen: false).getPrefColor();
     return MaterialApp(
+      themeMode: Provider.of<ThemeProvider>(context).themeMode,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
-        accentColor: Colors.amber,
+        primaryColor: Provider.of<ThemeProvider>(context).currentColorPrimary,
+        accentColor: Provider.of<ThemeProvider>(context).currentColorAccent,
         canvasColor: Color.fromRGBO(255, 254, 229, 1),
+        buttonColor: Colors.black,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      darkTheme: ThemeData(
+        buttonColor: Colors.white,
+        primaryColor: Provider.of<ThemeProvider>(context).currentColorPrimary,
+        accentColor: Provider.of<ThemeProvider>(context).currentColorAccent,
+        canvasColor: Color.fromRGBO(0, 0, 0, 1),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),

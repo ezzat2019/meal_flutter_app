@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart' as shared_pref;
+import 'package:toast/toast.dart';
 
 class FilterScreen extends StatefulWidget {
   final Function setFilter;
@@ -18,23 +20,53 @@ class _FilterScreenState extends State<FilterScreen> {
       isLactoseFree = false;
   Map<String, bool> filterMap = Map();
 
-  _FilterScreenState(this.setFilter);
+  @override
+  void initState() {
+    shared_pref.SharedPreferences.getInstance().then((value) {
+      if (value.containsKey("isGlutenFree")) {
+        isGlutenFree = value.getBool("isGlutenFree");
+      }
+      if (value.containsKey("isVegan")) {
+        isVegan = value.getBool("isVegan");
+      }
+      if (value.containsKey("isVegetarian")) {
+        isVegetarian = value.getBool("isVegetarian");
+      }
+      if (value.containsKey("isLactoseFree")) {
+        isLactoseFree = value.getBool("isLactoseFree");
+      }
+      setState(() {});
+      print("ddddddddddddddddddddddddddddddddddddddddd2 $isGlutenFree");
+    });
+  }
+
+  _FilterScreenState(this.setFilter) {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your Filters"),
+        title: Text(
+          "Your Filters",
+          style: TextStyle(color: Theme.of(context).buttonColor),
+        ),
         actions: [
           IconButton(
-              icon: Icon(Icons.save),
+              icon: Icon(Icons.save, color: Theme.of(context).buttonColor),
               onPressed: () {
-                filterMap['isGlutenFree'] = isGlutenFree;
-                filterMap['isVegan'] = isVegan;
-                filterMap['isVegetarian'] = isVegetarian;
-                filterMap['isLactoseFree'] = isLactoseFree;
                 setState(() {
-                  setFilter(filterMap);
+                  shared_pref.SharedPreferences.getInstance().then((value) {
+                    value.setBool("isGlutenFree", isGlutenFree);
+                    value.setBool("isVegan", isVegan);
+                    value.setBool("isVegetarian", isVegetarian);
+                    value.setBool("isLactoseFree", isLactoseFree);
+                    Toast.show("Saved!", context, duration: Toast.LENGTH_LONG);
+                    filterMap['isGlutenFree'] = isGlutenFree;
+                    filterMap['isVegan'] = isVegan;
+                    filterMap['isVegetarian'] = isVegetarian;
+                    filterMap['isLactoseFree'] = isLactoseFree;
+                    setFilter(filterMap);
+                  });
                 });
               })
         ],
@@ -47,9 +79,10 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Text(
               "Adjust your meal selection.",
               style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                color: Theme.of(context).buttonColor,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           SizedBox(
@@ -65,8 +98,14 @@ class _FilterScreenState extends State<FilterScreen> {
                       isGlutenFree = is_checked;
                     });
                   },
-                  title: Text("Gluten-free"),
-                  subtitle: Text("Only include gluten free meals"),
+                  title: Text(
+                    "Gluten-free",
+                    style: TextStyle(color: Theme.of(context).buttonColor),
+                  ),
+                  subtitle: Text(
+                    "Only include gluten free meals",
+                    style: TextStyle(color: Theme.of(context).buttonColor),
+                  ),
                 ),
                 SwitchListTile(
                   value: isVegan,
@@ -75,8 +114,14 @@ class _FilterScreenState extends State<FilterScreen> {
                       isVegan = is_checked;
                     });
                   },
-                  title: Text("Vegan"),
-                  subtitle: Text("Only include vegan meals."),
+                  title: Text(
+                    "Vegan",
+                    style: TextStyle(color: Theme.of(context).buttonColor),
+                  ),
+                  subtitle: Text(
+                    "Only include vegan meals.",
+                    style: TextStyle(color: Theme.of(context).buttonColor),
+                  ),
                 ),
                 SwitchListTile(
                   value: isVegetarian,
@@ -85,8 +130,14 @@ class _FilterScreenState extends State<FilterScreen> {
                       isVegetarian = is_checked;
                     });
                   },
-                  title: Text("Vegetarian"),
-                  subtitle: Text("Only include vegetarian meals."),
+                  title: Text(
+                    "Vegetarian",
+                    style: TextStyle(color: Theme.of(context).buttonColor),
+                  ),
+                  subtitle: Text(
+                    "Only include vegetarian meals.",
+                    style: TextStyle(color: Theme.of(context).buttonColor),
+                  ),
                 ),
                 SwitchListTile(
                   value: isLactoseFree,
@@ -95,8 +146,14 @@ class _FilterScreenState extends State<FilterScreen> {
                       isLactoseFree = is_checked;
                     });
                   },
-                  title: Text("lactose-free"),
-                  subtitle: Text("Only include lactose free meals."),
+                  title: Text(
+                    "lactose-free",
+                    style: TextStyle(color: Theme.of(context).buttonColor),
+                  ),
+                  subtitle: Text(
+                    "Only include lactose free meals.",
+                    style: TextStyle(color: Theme.of(context).buttonColor),
+                  ),
                 )
               ],
             ),
