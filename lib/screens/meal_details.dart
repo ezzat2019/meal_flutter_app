@@ -31,12 +31,15 @@ class _MealDetailsState extends State<MealDetails> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 300,
-              width: double.infinity,
-              child: Image.network(
-                widget.meal.imageUrl,
-                fit: BoxFit.cover,
+            Hero(
+              tag: widget.meal.id,
+              child: Container(
+                height: 300,
+                width: double.infinity,
+                child: Image.network(
+                  widget.meal.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Container(
@@ -59,8 +62,8 @@ class _MealDetailsState extends State<MealDetails> {
                         )),
                     margin: EdgeInsets.all(10),
                     padding: EdgeInsets.all(10),
-                    width: 300,
-                    height: 150,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * .25,
                     child: ListView.builder(
                       itemBuilder: (_, index) {
                         return Card(
@@ -91,8 +94,8 @@ class _MealDetailsState extends State<MealDetails> {
                         )),
                     margin: EdgeInsets.all(10),
                     padding: EdgeInsets.all(10),
-                    width: 300,
-                    height: 150,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * .25,
                     child: ListView.builder(
                       itemBuilder: (_, index) {
                         return Column(

@@ -7,6 +7,37 @@ class ThemeProvider with ChangeNotifier {
   int radio_value = 0;
   Color currentColorPrimary = Colors.pink;
   Color currentColorAccent = Colors.amberAccent;
+  bool switch_lan = false;
+
+  Map<String, String> mapAr = {
+    "d_title": "عالم الطبخ",
+    "d_meal": "الوجبات",
+    "d_filter": "التصنيف المخصص",
+    "d_theme": "شكل التطبيق",
+    "d_arabic": "العربية",
+    "d_englis": "الانجليزيه",
+    "c_app_bar": "الوجبات",
+    "c_cat": "التصنيفات",
+    "c_fav": "المفضلة",
+  };
+  Map<String, String> mapEn = {
+    "d_title": "Cooking Up!",
+    "c_app_bar": "Meal Category!",
+    "c_cat": "Categories",
+    "c_fav": "My favourites",
+    "d_meal": "Meal",
+    "d_filter": "Filters",
+    "d_theme": "Theme",
+    "d_arabic": "Arabic",
+    "d_englis": "English",
+  };
+
+  void setSwitchLAn(bool switch_lan) async {
+    this.switch_lan = switch_lan;
+    notifyListeners();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool("is_en", switch_lan);
+  }
 
   void sercurrentColorPrimary(Color color) async {
     currentColorPrimary = color;
@@ -39,6 +70,14 @@ class ThemeProvider with ChangeNotifier {
       int b_color = sharedPreferences.getInt("b_color");
       currentColorAccent = Color(b_color);
     }
+    notifyListeners();
+  }
+
+  void getFavLan() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool switch_lan2 = sharedPreferences.getBool("is_en") ?? false;
+    switch_lan = switch_lan2;
+    notifyListeners();
   }
 
   void getModePref() async {
@@ -54,6 +93,7 @@ class ThemeProvider with ChangeNotifier {
       themeMode = ThemeMode.dark;
       radio_value = 2;
     }
+    notifyListeners();
   }
 
   void setcurrentColorAccent(Color color) async {

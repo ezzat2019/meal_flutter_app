@@ -45,11 +45,14 @@ class MealItem extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(16),
                         topRight: Radius.circular(16)),
-                    child: Image.network(
-                      meal.imageUrl,
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: meal.id,
+                      child: Image.network(
+                        meal.imageUrl,
+                        height: 200,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Positioned(

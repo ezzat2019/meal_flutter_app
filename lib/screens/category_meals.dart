@@ -53,11 +53,16 @@ class CategotyMealsState extends State<CategotyMeals> {
 
   @override
   Widget build(BuildContext context) {
+    final is_land = MediaQuery.of(context).orientation == Orientation.landscape;
+    final wi = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           title: Text(title),
         ),
-        body: ListView.builder(
+        body: GridView.builder(
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              childAspectRatio: is_land ? 4.5 / 3.5 : 1 / .7,
+              maxCrossAxisExtent: is_land ? wi / 2 : wi),
           itemBuilder: (context, pos) {
             print("yes");
             return MealItem(mealsOfOneCategoty[pos], gotoDetails);

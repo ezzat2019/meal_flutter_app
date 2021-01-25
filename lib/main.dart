@@ -11,13 +11,16 @@ void main() {
       child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
-    Provider.of<ThemeProvider>(context, listen: false).getModePref();
-    Provider.of<ThemeProvider>(context, listen: false).getPrefColor();
     return MaterialApp(
       themeMode: Provider.of<ThemeProvider>(context).themeMode,
       debugShowCheckedModeBanner: false,
@@ -38,6 +41,14 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
     );
+  }
+
+  @override
+  void initState() {
+    Provider.of<ThemeProvider>(context, listen: false).getModePref();
+    Provider.of<ThemeProvider>(context, listen: false).getPrefColor();
+    Provider.of<ThemeProvider>(context, listen: false).getFavLan();
+    super.initState();
   }
 }
 
@@ -69,27 +80,37 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if (c_index == 1) {
       page = FavouriteScreen(pp, favList);
     }
+    final myProvider = Provider.of<ThemeProvider>(context);
+    return Directionality(
+      textDirection:
+          myProvider.switch_lan ? TextDirection.rtl : TextDirection.ltr,
+      child: Scaffold(
+        body: page,
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          selectedItemColor: Colors.white,
+          onTap: (index) {
+            setState(() {
+              c_index = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.category_rounded),
+                label: !myProvider.switch_lan
+                    ? myProvider.mapEn["c_cat"]
+                    : myProvider.mapAr["c_cat"]),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: !myProvider.switch_lan
+                    ? myProvider.mapEn["c_fav"]
+                    : myProvider.mapAr["c_fav"])
+          ],
+          currentIndex: c_index,
+        ),
 
-    return Scaffold(
-      body: page,
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        selectedItemColor: Colors.white,
-        onTap: (index) {
-          setState(() {
-            c_index = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.category_rounded), label: "Categories"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: "Favourite")
-        ],
-        currentIndex: c_index,
+        // This trailing comma makes auto-formatting nicer for build methods.
       ),
-
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
