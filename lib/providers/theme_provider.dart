@@ -101,6 +101,7 @@ class ThemeProvider with ChangeNotifier {
     notifyListeners();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setInt("b_color", currentColorAccent.value);
+    var s = Image.asset("");
   }
 
   void serRaidoValue(int val) {

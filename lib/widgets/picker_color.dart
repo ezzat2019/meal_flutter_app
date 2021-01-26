@@ -55,7 +55,7 @@ class PickerColor extends StatelessWidget {
                 FlatButton(
                   child: const Text('Got it'),
                   onPressed: () {
-                    Navigator.of(context2).pop();
+                    Navigator.of(ctx).pop();
                   },
                 ),
               ],

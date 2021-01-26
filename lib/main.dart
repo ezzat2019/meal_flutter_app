@@ -3,7 +3,9 @@ import 'package:meal_flutter_app/modules/meal.dart';
 import 'package:meal_flutter_app/providers/theme_provider.dart';
 import 'package:meal_flutter_app/screens/category_screen.dart';
 import 'package:meal_flutter_app/screens/favourite_screen.dart';
+import 'package:meal_flutter_app/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -19,6 +21,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Widget currentPage = WelcomeScreen();
+
+  _MyAppState() {
+    getPage().then((value) {
+      setState(() {
+        currentPage = value;
+      });
+    });
+  }
+
+  Future<Widget> getPage() async {
+    final sh = await SharedPreferences.getInstance();
+    bool isStarted = sh.getBool("is_welcome") ?? false;
+    // sh.remove("is_welcome");
+    if (isStarted) {
+      return MyHomePage();
+    } else {
+      return WelcomeScreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,7 +62,8 @@ class _MyAppState extends State<MyApp> {
         canvasColor: Color.fromRGBO(0, 0, 0, 1),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      // home: MyHomePage(),
+      home: currentPage,
     );
   }
 
