@@ -65,6 +65,8 @@ class WelcomeScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(8),
               child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
                 elevation: 7,
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 100),
                 color: Colors.pink,
