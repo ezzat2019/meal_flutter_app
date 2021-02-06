@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  floor: ^0.18.0
   carousel_slider: ^2.3.1
   flutter_colorpicker: ^0.3.5
   shared_preferences: ^0.5.12+4
@@ -35,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
+  floor_generator: ^0.18.0
+  build_runner: ^1.10.3
   flutter_launcher_icons: "^0.8.0"
   flutter_test:
     sdk: flutter

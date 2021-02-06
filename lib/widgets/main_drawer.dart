@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_flutter_app/modules/meal.dart';
 import 'package:meal_flutter_app/providers/theme_provider.dart';
-import 'package:meal_flutter_app/screens/category_screen.dart';
 import 'package:meal_flutter_app/screens/favourite_theme.dart';
 import 'package:meal_flutter_app/screens/filter_screen.dart';
 import 'package:provider/provider.dart';
@@ -45,10 +44,7 @@ class MainDrawer extends StatelessWidget {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushReplacement(MaterialPageRoute(builder: (_) {
-                    return CategoryScreen(pp, favList);
-                  }));
+                  Navigator.of(context).pop();
                 },
                 leading: Icon(Icons.restaurant,
                     color: Theme.of(context).buttonColor),
